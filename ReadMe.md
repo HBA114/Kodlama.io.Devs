@@ -4,7 +4,7 @@
 
 ### Cloning Project
 
-- You can open project with Visual Studio directily with choosing Clone a Project section or you can use Github Desktop.
+- You can open project with Visual Studio directly (recommended) with choosing Clone a Project section or you can use Github Desktop.
 
 ### How To Run This Project
 
