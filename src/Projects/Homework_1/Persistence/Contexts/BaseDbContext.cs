@@ -10,14 +10,14 @@ namespace Persistence.Contexts
 
         public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
 
-        public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
+        public BaseDbContext(DbContextOptions<BaseDbContext> dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
             Configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            //
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,8 +31,8 @@ namespace Persistence.Contexts
 
             ProgrammingLanguage[] programmingLanguageSeeds =
             {
-                new ProgrammingLanguage(0, "Python"),
-                new ProgrammingLanguage(1, "C++")
+                new (1, "Python"),
+                new (2, "C++")
             };
 
             modelBuilder.Entity<ProgrammingLanguage>().HasData(programmingLanguageSeeds);

@@ -20,8 +20,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Features\ProgrammingLanguages\Constants\" />
-	  <Folder Include="Features\ProgrammingLanguages\Models\" />
-	  <Folder Include="Features\ProgrammingLanguages\Queries\" />
 	</ItemGroup>
 
 
