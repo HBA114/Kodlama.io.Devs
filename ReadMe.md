@@ -24,5 +24,5 @@ add-migration initialMigration
 update-database
 ```
 
-- Thats it. You can run project now. You can test functions and requests with swagger. Swagger will open wher you run this project. Have a nice day 💻.
+- Thats it. You can run project now. You can test functions and requests with swagger. Swagger will open when you run this project. Have a nice day 💻.
 
