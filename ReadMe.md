@@ -4,7 +4,7 @@
 
 ### Cloning Project
 
-- You can open project with Visual Studio directily with choosing Clone a Project section or you can use Github Desktop.
+- You can open project with Visual Studio directly (recommended) with choosing Clone a Project section or you can use Github Desktop.
 
 ### How To Run This Project
 
@@ -24,5 +24,5 @@ add-migration initialMigration
 update-database
 ```
 
-- Thats it. You can run project now. You can test functions and requests with swagger. Swagger will open wher you run this project. Have a nice day 💻.
+- Thats it. You can run project now. You can test functions and requests with swagger. Swagger will open when you run this project. Have a nice day 💻.
 
