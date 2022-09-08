@@ -30,7 +30,6 @@ namespace Application.Features.Technologies.Queries.GetByIdTechnology
 
                 Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
 
-                // Not works Perfectly! technology.ProgrammingLanguage is null!
                 TechnologyGetByIdDto result = _mapper.Map<TechnologyGetByIdDto>(technology);
                 return result;
             }

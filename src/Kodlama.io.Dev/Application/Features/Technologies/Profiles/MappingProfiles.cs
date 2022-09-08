@@ -1,4 +1,5 @@
-﻿using Application.Features.Technologies.Dtos;
+﻿using Application.Features.Technologies.Commands.CreateTechnology;
+using Application.Features.Technologies.Dtos;
 using Application.Features.Technologies.Models;
 using AutoMapper;
 using Core.Persistence.Paging;
@@ -20,6 +21,9 @@ namespace Application.Features.Technologies.Profiles
                 .ForMember(t => t.ProgrammingLanguageName, opt => opt.MapFrom(c => c.ProgrammingLanguage.Name)) 
                 // Why Programming language returns null ?!?!
                 .ReverseMap();
+
+            CreateMap<Technology, CreatedTechnologyDto>().ReverseMap();
+            CreateMap<Technology, CreateTechnologyCommand>().ReverseMap();
         }
     }
 }
