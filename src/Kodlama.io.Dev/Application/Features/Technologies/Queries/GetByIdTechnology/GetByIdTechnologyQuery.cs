@@ -2,8 +2,10 @@
 using Application.Features.Technologies.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Technologies.Queries.GetByIdTechnology
 {
@@ -28,9 +30,12 @@ namespace Application.Features.Technologies.Queries.GetByIdTechnology
             {
                 await _technologyBusinessRules.TechnologyShouldExistWhenRequested(request.Id);
 
-                Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
+                IPaginate<Technology> technology = await _technologyRepository.GetListAsync(
+                    t => t.Id == request.Id,
+                    include: p => p.Include(c => c.ProgrammingLanguage)
+                    );
 
-                TechnologyGetByIdDto result = _mapper.Map<TechnologyGetByIdDto>(technology);
+                TechnologyGetByIdDto result = _mapper.Map<TechnologyGetByIdDto>(technology.Items.FirstOrDefault());
                 return result;
             }
         }
