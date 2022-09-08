@@ -1,4 +1,4 @@
-# Kodlama.io.Dev
+# Kodlama.io.Devs
 
 ## Senior Level Software Developer Training Camp (.Net) Homework_1
 
