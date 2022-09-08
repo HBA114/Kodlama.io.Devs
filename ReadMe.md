@@ -10,15 +10,15 @@
 
 - You have to run migratons first for running project as expected.
 
-- Firstly choose src/Projects/Homework_1/WebAPI as Startup Project.
+- Firstly choose src/Kodlama.io.Devs/WebAPI as Startup Project.
 
-- Then open Package Manager Console. In Packace Manager Console window choose src/Projects/Homework_1/Persistence as default Project.
+- Then open Package Manager Console. In Packace Manager Console window choose src/Kodlama.io.Devs/Persistence as default Project.
 
 - Then run these commands in Package Manager Console in order:
 ```shell
 add-migration initialMigration 
 ```
-- This commands Creates a Migration Folder in src/Projects/Homework_1/Persistence and Adds a file named initialMigration. For apply migration run:
+- This commands Creates a Migration Folder in src/Kodlama.io.Devs/Persistence and Adds a file named initialMigration. For apply migration run:
 
 ```shell
 update-database
