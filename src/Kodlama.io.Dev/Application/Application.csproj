@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Features\ProgrammingLanguages\Constants\" />
-	  <Folder Include="Features\Technologies\Commands\DeleteTechnology\" />
 	  <Folder Include="Features\Technologies\Constants\" />
 	</ItemGroup>
 
