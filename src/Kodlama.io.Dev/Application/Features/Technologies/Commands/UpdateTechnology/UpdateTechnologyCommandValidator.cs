@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.Technologies.Commands.CreateTechnology
+namespace Application.Features.Technologies.Commands.UpdateTechnology
 {
-    public class CreateTechnologyCommandValidator : AbstractValidator<CreateTechnologyCommand>
+    public class UpdateTechnologyCommandValidator : AbstractValidator<UpdateTechnologyCommand>
     {
-        public CreateTechnologyCommandValidator()
+        public UpdateTechnologyCommandValidator()
         {
             RuleFor(p => p.Name).NotEmpty();
             RuleFor(p => p.Description).NotEmpty();

@@ -24,6 +24,8 @@ namespace Application.Features.Technologies.Profiles
 
             CreateMap<Technology, CreatedTechnologyDto>().ReverseMap();
             CreateMap<Technology, CreateTechnologyCommand>().ReverseMap();
+
+            CreateMap<Technology, UpdateTechnologyDto>().ReverseMap();
         }
     }
 }
