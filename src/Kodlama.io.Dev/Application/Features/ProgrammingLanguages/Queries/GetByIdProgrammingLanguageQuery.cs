@@ -35,9 +35,9 @@ namespace Application.Features.ProgrammingLanguages.Queries
                 // if programming language is null business exception will be throwed
                 ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(p => p.Id == request.Id);
 
-                ProgrammingLanguageGetByIdDto programmingLanguageGetByIdDto = _mapper.Map<ProgrammingLanguageGetByIdDto>(programmingLanguage);
+                ProgrammingLanguageGetByIdDto result = _mapper.Map<ProgrammingLanguageGetByIdDto>(programmingLanguage);
 
-                return programmingLanguageGetByIdDto;
+                return result;
             }
         }
     }

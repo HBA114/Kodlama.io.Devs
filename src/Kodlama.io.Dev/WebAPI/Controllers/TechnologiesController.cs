@@ -1,4 +1,6 @@
-﻿using Application.Features.Technologies.Models;
+﻿using Application.Features.Technologies.Dtos;
+using Application.Features.Technologies.Models;
+using Application.Features.Technologies.Queries.GetByIdTechnology;
 using Application.Features.Technologies.Queries.GetListTechnology;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +17,13 @@ namespace WebAPI.Controllers
             GetListTechnologyQuery getListTechnologyQuery = new() { PageRequest = pageRequest };
             TechnologyListModel response = await Mediator.Send(getListTechnologyQuery);
 
+            return Ok(response);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdTechnologyQuery getByIdTechnologyQuery)
+        {
+            TechnologyGetByIdDto response = await Mediator.Send(getByIdTechnologyQuery);
             return Ok(response);
         }
     }

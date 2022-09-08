@@ -11,10 +11,15 @@ namespace Application.Features.Technologies.Profiles
         public MappingProfiles()
         {
             CreateMap<Technology, TechnologyListDto>()
-                .ForMember(t => t.ProgrammingLanguageName, opt => opt.MapFrom(t => t.ProgrammingLanguage.Name))
+                .ForMember(t => t.ProgrammingLanguageName, opt => opt.MapFrom(c => c.ProgrammingLanguage.Name))
                 .ReverseMap();
 
             CreateMap<IPaginate<Technology>, TechnologyListModel>().ReverseMap();
+
+            CreateMap<Technology, TechnologyGetByIdDto>()
+                .ForMember(t => t.ProgrammingLanguageName, opt => opt.MapFrom(c => c.ProgrammingLanguage.Name)) 
+                // Why Programming language returns null ?!?!
+                .ReverseMap();
         }
     }
 }
