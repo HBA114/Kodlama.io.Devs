@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateTechnologyCommand updateTechnologyCommand)
         {
             UpdateTechnologyDto result = await Mediator.Send(updateTechnologyCommand);

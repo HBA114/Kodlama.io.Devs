@@ -19,7 +19,6 @@ namespace Application.Features.Technologies.Profiles
 
             CreateMap<Technology, TechnologyGetByIdDto>()
                 .ForMember(t => t.ProgrammingLanguageName, opt => opt.MapFrom(c => c.ProgrammingLanguage.Name)) 
-                // Why Programming language returns null ?!?!
                 .ReverseMap();
 
             CreateMap<Technology, CreatedTechnologyDto>().ReverseMap();
