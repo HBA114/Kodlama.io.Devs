@@ -30,12 +30,10 @@ namespace Application.Features.Technologies.Queries.GetByIdTechnology
             {
                 await _technologyBusinessRules.TechnologyShouldExistWhenRequested(request.Id);
 
-                IPaginate<Technology> technology = await _technologyRepository.GetListAsync(
-                    t => t.Id == request.Id,
-                    include: p => p.Include(c => c.ProgrammingLanguage)
-                    );
+                Technology technology = await _technologyRepository.GetAsync(t => t.Id == request.Id);
 
-                TechnologyGetByIdDto result = _mapper.Map<TechnologyGetByIdDto>(technology.Items.FirstOrDefault());
+                TechnologyGetByIdDto result = _mapper.Map<TechnologyGetByIdDto>(technology);
+
                 return result;
             }
         }

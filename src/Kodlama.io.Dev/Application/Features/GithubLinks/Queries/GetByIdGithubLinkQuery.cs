@@ -30,12 +30,7 @@ namespace Application.Features.GithubLinks.Queries
             {
                 await _githubLinkBusinessRules.GithubLinkShouldExistWhenRequested(request.Id);
 
-                IPaginate<GithubLink> githubLinks = await _githubLinkRepository.GetListAsync(
-                    p => p.Id == request.Id,
-                    include: p => p.Include(c => c.User)
-                    );
-
-                GithubLink githubLink = githubLinks.Items.FirstOrDefault();
+                GithubLink githubLink = await _githubLinkRepository.GetAsync(p => p.Id == request.Id);
 
                 GithubLinkGetbyIdDto result = _mapper.Map<GithubLinkGetbyIdDto>(githubLink);
                 return result;

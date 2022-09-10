@@ -57,6 +57,7 @@ namespace Persistence.Contexts
                 a.Property(p => p.Description).HasColumnName("Description");
 
                 a.HasOne(p => p.ProgrammingLanguage);
+                a.Navigation(p => p.ProgrammingLanguage).AutoInclude();
             });
 
             Technology[] programmingLanguageTechnologySeeds =
@@ -125,6 +126,7 @@ namespace Persistence.Contexts
                 a.Property(p => p.Url).HasColumnName("Url");
 
                 a.HasOne(p => p.User);
+                a.Navigation(p => p.User).AutoInclude();
             });
         }
     }
