@@ -1,5 +1,4 @@
-﻿using Application.Features.AppUsers.Rules;
-using Application.Features.ProgrammingLanguages.Rules;
+﻿using Application.Features.ProgrammingLanguages.Rules;
 using Application.Features.Technologies.Rules;
 using Application.Features.GithubLinks.Rules;
 using Core.Application.Pipelines.Authorization;
@@ -18,7 +17,6 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<UserBusinessRules>();
             services.AddScoped<ProgrammingLanguageBusinessRules>();
             services.AddScoped<TechnologyBusinessRules>();
             services.AddScoped<GithubLinkBusinessRules>();

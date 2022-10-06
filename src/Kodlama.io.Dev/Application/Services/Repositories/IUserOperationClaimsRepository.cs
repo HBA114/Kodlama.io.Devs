@@ -3,7 +3,7 @@ using Core.Security.Entities;
 
 namespace Application.Services.Repositories
 {
-    public interface IUserOperationClaimsRepository : IAsyncRepository<UserOperationClaim>, IRepository<UserOperationClaim>
+    public interface IUserOperationClaimRepository : IAsyncRepository<UserOperationClaim>, IRepository<UserOperationClaim>
     {
 
     }
