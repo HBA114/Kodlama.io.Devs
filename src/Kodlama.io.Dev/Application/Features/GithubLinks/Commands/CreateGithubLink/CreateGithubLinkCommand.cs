@@ -3,15 +3,18 @@ using Application.Features.GithubLinks.Dtos;
 using Application.Features.GithubLinks.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.GithubLinks.Commands.CreateGithubLink
 {
-    public class CreateGithubLinkCommand : IRequest<CreatedGithubLinkDto>
+    public class CreateGithubLinkCommand : IRequest<CreatedGithubLinkDto>, ISecuredRequest
     {
         public int UserId { get; set; }
         public string Url { get; set; }
+
+        public string[] Roles { get; } = { "user" }; // ?? 
 
         public class CreateGithubLinkCommandHandler : IRequestHandler<CreateGithubLinkCommand, CreatedGithubLinkDto>
         {
