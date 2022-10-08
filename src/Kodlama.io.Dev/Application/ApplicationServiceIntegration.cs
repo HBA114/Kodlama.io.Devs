@@ -1,5 +1,4 @@
-﻿using Application.Features.AppUsers.Rules;
-using Application.Features.ProgrammingLanguages.Rules;
+﻿using Application.Features.ProgrammingLanguages.Rules;
 using Application.Features.Technologies.Rules;
 using Application.Features.GithubLinks.Rules;
 using Core.Application.Pipelines.Authorization;
@@ -8,6 +7,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Features.Auths.Rules;
+using Application.Services.AuthService;
 
 namespace Application
 {
@@ -18,14 +19,16 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<UserBusinessRules>();
             services.AddScoped<ProgrammingLanguageBusinessRules>();
             services.AddScoped<TechnologyBusinessRules>();
             services.AddScoped<GithubLinkBusinessRules>();
+            services.AddScoped<AuthBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+
+            services.AddScoped<IAuthService, AuthManager>();
 
             return services;
         }
