@@ -7,6 +7,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Features.Auths.Rules;
+using Application.Services.AuthService;
 
 namespace Application
 {
@@ -20,10 +22,13 @@ namespace Application
             services.AddScoped<ProgrammingLanguageBusinessRules>();
             services.AddScoped<TechnologyBusinessRules>();
             services.AddScoped<GithubLinkBusinessRules>();
+            services.AddScoped<AuthBusinessRules>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+
+            services.AddScoped<IAuthService, AuthManager>();
 
             return services;
         }

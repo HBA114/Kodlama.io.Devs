@@ -14,6 +14,14 @@ namespace WebAPI.Controllers
     [ApiController]
     public class TechnologiesController : BaseController
     {
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateTechnologyCommand createTechnologyCommand)
+        {
+            CreatedTechnologyDto result = await Mediator.Send(createTechnologyCommand);
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
@@ -27,13 +35,6 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetById([FromRoute] GetByIdTechnologyQuery getByIdTechnologyQuery)
         {
             TechnologyGetByIdDto result = await Mediator.Send(getByIdTechnologyQuery);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateTechnologyCommand createTechnologyCommand)
-        {
-            CreatedTechnologyDto result = await Mediator.Send(createTechnologyCommand);
             return Ok(result);
         }
 
