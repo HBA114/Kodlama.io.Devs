@@ -1,8 +1,6 @@
-﻿namespace Application.Features.GithubLinks.Dtos
+﻿namespace Application.Features.GithubLinks.Dtos;
+public class CreatedGithubLinkDto
 {
-    public class CreatedGithubLinkDto
-    {
-        public int UserId { get; set; }
-        public string Url { get; set; }
-    }
+    public int UserId { get; set; }
+    public string Url { get; set; }
 }

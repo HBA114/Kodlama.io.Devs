@@ -20,9 +20,8 @@ public class AuthBusinessRules
         if (user != null) throw new BusinessException("Email already registered.");
     }
 
-    public async Task UserShouldExistWhenRequested(string email)
+    public void UserShouldExistWhenRequested(User? user)
     {
-        User? user = await _userRepository.GetAsync(x => x.Email == email);
         if (user == null) throw new BusinessException("User not found!");
     }
 

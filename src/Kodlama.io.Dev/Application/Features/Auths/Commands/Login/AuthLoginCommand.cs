@@ -28,8 +28,8 @@ public class AuthLoginCommand : IRequest<LoggedInDto>
 
         public async Task<LoggedInDto> Handle(AuthLoginCommand request, CancellationToken cancellationToken)
         {
-            await _authBusinessRules.UserShouldExistWhenRequested(request.UserForLoginDto.Email);
-            User user = await _userRepository.GetAsync(x => x.Email == request.UserForLoginDto.Email);
+            User? user = await _userRepository.GetAsync(x => x.Email == request.UserForLoginDto.Email);
+            _authBusinessRules.UserShouldExistWhenRequested(user);
             _authBusinessRules.UserCredentialsShouldMatchWhenLoggingIn(request.UserForLoginDto.Password, user.PasswordHash, user.PasswordSalt);
 
             AccessToken createdAccessToken = await _authService.CreateAccessToken(user);

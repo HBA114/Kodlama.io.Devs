@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Application
 {
@@ -27,6 +29,8 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IAuthService, AuthManager>();
 

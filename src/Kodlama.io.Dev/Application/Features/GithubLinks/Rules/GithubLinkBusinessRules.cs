@@ -18,7 +18,7 @@ namespace Application.Features.GithubLinks.Rules
             GithubLink? githubLink = await _githubLinkRepository.GetAsync(p => p.Id == id);
             if (githubLink == null) throw new BusinessException("GithubLink Not Found!");
         }
-        public async Task CanNotAddSeconLinkToUser(int userId)
+        public async Task CanNotAddSecondLinkToUser(int userId)
         {
             GithubLink? githubLink =await _githubLinkRepository.GetAsync(p => p.UserId == userId);
             if (githubLink != null) throw new BusinessException("Can Not Add GithubLink! User already have a GithubLink.");
