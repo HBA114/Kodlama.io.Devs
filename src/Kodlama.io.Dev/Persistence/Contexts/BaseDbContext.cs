@@ -1,4 +1,6 @@
-﻿using Core.Security.Entities;
+﻿using System.Text;
+using Core.Security.Entities;
+using Core.Security.Enums;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -70,8 +72,6 @@ namespace Persistence.Contexts
 
             modelBuilder.Entity<Technology>().HasData(programmingLanguageTechnologySeeds);
 
-
-
             modelBuilder.Entity<User>(a =>
             {
                 a.ToTable("Users").HasKey(k => k.Id);
@@ -87,8 +87,6 @@ namespace Persistence.Contexts
                 a.HasMany(p => p.UserOperationClaims);
                 a.HasMany(p => p.RefreshTokens);
             });
-
-
 
             modelBuilder.Entity<OperationClaim>(a =>
             {
@@ -117,7 +115,8 @@ namespace Persistence.Contexts
                 a.HasOne(p => p.OperationClaim);
             });
 
-            modelBuilder.Entity<RefreshToken>(a => {
+            modelBuilder.Entity<RefreshToken>(a =>
+            {
                 a.ToTable("RefreshTokens").HasKey(k => k.Id);
                 a.Property(p => p.Id).HasColumnName("Id");
                 a.Property(p => p.UserId).HasColumnName("UserId");

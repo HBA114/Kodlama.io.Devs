@@ -42,7 +42,6 @@ public class AuthLoginCommand : IRequest<LoggedInDto>
                 RefreshToken = addedRefreshToken
             };
 
-
             return loggedInDto;
         }
     }

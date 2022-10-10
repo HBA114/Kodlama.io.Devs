@@ -9,32 +9,30 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Application.Features.UserOperationClaims.Rules;
 
-namespace Application
+namespace Application;
+
+public static class ApplicationServiceIntegration
 {
-    public static class ApplicationServiceIntegration
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<ProgrammingLanguageBusinessRules>();
-            services.AddScoped<TechnologyBusinessRules>();
-            services.AddScoped<GithubLinkBusinessRules>();
-            services.AddScoped<AuthBusinessRules>();
+        services.AddScoped<ProgrammingLanguageBusinessRules>();
+        services.AddScoped<TechnologyBusinessRules>();
+        services.AddScoped<GithubLinkBusinessRules>();
+        services.AddScoped<AuthBusinessRules>();
+        services.AddScoped<UserOperationClaimBusinessRules>();
 
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+        services.AddScoped<IAuthService, AuthManager>();
 
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<IAuthService, AuthManager>();
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
-            return services;
-        }
+        return services;
     }
 }

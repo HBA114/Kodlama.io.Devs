@@ -6,40 +6,38 @@ using Core.Application.Pipelines.Authorization;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.GithubLinks.Commands.CreateGithubLink
+namespace Application.Features.GithubLinks.Commands.CreateGithubLink;
+
+public class CreateGithubLinkCommand : IRequest<CreatedGithubLinkDto>, ISecuredRequest
 {
-    public class CreateGithubLinkCommand : IRequest<CreatedGithubLinkDto>, ISecuredRequest
+    public int UserId { get; set; }
+    public string? Url { get; set; }
+
+    public string[] Roles { get; } = new string[1] { "User" }; // ?? 
+
+    public class CreateGithubLinkCommandHandler : IRequestHandler<CreateGithubLinkCommand, CreatedGithubLinkDto>
     {
-        public int UserId { get; set; }
-        public string Url { get; set; }
+        private readonly IGithubLinkRepository _githubLinkRepository;
+        private readonly IMapper _mapper;
+        private readonly GithubLinkBusinessRules _githubLinkBusinessRules;
 
-        // "Unable to resolve service for type 'Microsoft.AspNetCore.Http.IHttpContextAccessor' while attempting to activate 'Core.Application.Pipelines.Authorization.AuthorizationBehavior`2[Application.Features.GithubLinks.Commands.CreateGithubLink.CreateGithubLinkCommand,Application.Features.GithubLinks.Dtos.CreatedGithubLinkDto]'."
-
-        public string[] Roles { get; } = { "user" }; // ?? 
-
-        public class CreateGithubLinkCommandHandler : IRequestHandler<CreateGithubLinkCommand, CreatedGithubLinkDto>
+        public CreateGithubLinkCommandHandler(IGithubLinkRepository githubLinkRepository, IMapper mapper, GithubLinkBusinessRules githubLinkBusinessRules)
         {
-            private readonly IGithubLinkRepository _githubLinkRepository;
-            private readonly IMapper _mapper;
-            private readonly GithubLinkBusinessRules _githubLinkBusinessRules;
+            _githubLinkRepository = githubLinkRepository;
+            _mapper = mapper;
+            _githubLinkBusinessRules = githubLinkBusinessRules;
+        }
 
-            public CreateGithubLinkCommandHandler(IGithubLinkRepository githubLinkRepository, IMapper mapper, GithubLinkBusinessRules githubLinkBusinessRules)
-            {
-                _githubLinkRepository = githubLinkRepository;
-                _mapper = mapper;
-                _githubLinkBusinessRules = githubLinkBusinessRules;
-            }
+        public async Task<CreatedGithubLinkDto> Handle(CreateGithubLinkCommand request, CancellationToken cancellationToken)
+        {
+            await _githubLinkBusinessRules.CanNotAddSecondLinkToUser(request.UserId);
 
-            public async Task<CreatedGithubLinkDto> Handle(CreateGithubLinkCommand request, CancellationToken cancellationToken)
-            {
-                await _githubLinkBusinessRules.CanNotAddSecondLinkToUser(request.UserId);
+            GithubLink mappedUserLink = _mapper.Map<GithubLink>(request);
+            GithubLink createdUserLink = await _githubLinkRepository.AddAsync(mappedUserLink);
 
-                GithubLink mappedUserLink = _mapper.Map<GithubLink>(request);
-                GithubLink createdUserLink = await _githubLinkRepository.AddAsync(mappedUserLink);
-
-                CreatedGithubLinkDto result = _mapper.Map<CreatedGithubLinkDto>(createdUserLink);
-                return result;
-            }
+            CreatedGithubLinkDto result = _mapper.Map<CreatedGithubLinkDto>(createdUserLink);
+            return result;
         }
     }
 }
+
