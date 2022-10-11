@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class UserAndGithubLink : Migration
+    public partial class all : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,6 +20,19 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OperationClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProgrammingLanguages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgrammingLanguages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,6 +52,27 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Technologies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProgrammingLanguageId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Technologies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Technologies_ProgrammingLanguages_ProgrammingLanguageId",
+                        column: x => x.ProgrammingLanguageId,
+                        principalTable: "ProgrammingLanguages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +96,7 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RefreshToken",
+                name: "RefreshTokens",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -79,9 +113,9 @@ namespace Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RefreshToken_Users_UserId",
+                        name: "FK_RefreshTokens_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -117,12 +151,35 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "OperationClaims",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "User" });
+                values: new object[,]
+                {
+                    { 1, "User" },
+                    { 2, "Admin" }
+                });
 
             migrationBuilder.InsertData(
-                table: "OperationClaims",
+                table: "ProgrammingLanguages",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Admin" });
+                values: new object[,]
+                {
+                    { 1, "Python" },
+                    { 2, "C++" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "Id", "Description", "Name", "ProgrammingLanguageId" },
+                values: new object[] { 1, "Micro Web Framework", "Flask", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "Id", "Description", "Name", "ProgrammingLanguageId" },
+                values: new object[] { 2, "Web Application Framework", "Django", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Technologies",
+                columns: new[] { "Id", "Description", "Name", "ProgrammingLanguageId" },
+                values: new object[] { 3, "Low-level, widely supported modeling and rendering software package.", "OpenGL", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GithubLinks_UserId",
@@ -130,9 +187,14 @@ namespace Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RefreshToken_UserId",
-                table: "RefreshToken",
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Technologies_ProgrammingLanguageId",
+                table: "Technologies",
+                column: "ProgrammingLanguageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserOperationClaims_OperationClaimId",
@@ -151,10 +213,16 @@ namespace Persistence.Migrations
                 name: "GithubLinks");
 
             migrationBuilder.DropTable(
-                name: "RefreshToken");
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "Technologies");
 
             migrationBuilder.DropTable(
                 name: "UserOperationClaims");
+
+            migrationBuilder.DropTable(
+                name: "ProgrammingLanguages");
 
             migrationBuilder.DropTable(
                 name: "OperationClaims");
