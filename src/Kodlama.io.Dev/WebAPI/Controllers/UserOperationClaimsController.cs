@@ -1,4 +1,6 @@
-using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaimCommand;
+using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
+using Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
+using Application.Features.UserOperationClaims.Commands.UpdateUserOperationClaim;
 using Application.Features.UserOperationClaims.Dtos;
 using Application.Features.UserOperationClaims.Models;
 using Application.Features.UserOperationClaims.Queries;
@@ -10,6 +12,13 @@ namespace WebAPI.Controllers;
 [Route("api/[controller]")]
 public class UserOperationClaimsController : BaseController
 {
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateUserOperationClaimCommand createUserOperationClaimCommand)
+    {
+        CreatedUserOperationClaimDto result = await Mediator.Send(createUserOperationClaimCommand);
+        return Ok(result);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetListByUserId([FromQuery] GetUserOperationClaimListByUserIdQuery getUserOperationClaimListByUserIdQuery)
     {
@@ -17,10 +26,17 @@ public class UserOperationClaimsController : BaseController
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateUserOperationClaimCommand createUserOperationClaimCommand)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateUserOperationClaimCommand updateUserOperationClaimCommand)
     {
-        CreatedUserOperationClaimDto result = await Mediator.Send(createUserOperationClaimCommand);
+        GetByIdUserOperationClaimDto result = await Mediator.Send(updateUserOperationClaimCommand);
+        return Ok(result);
+    }
+
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> Delete([FromRoute] DeleteUserOperationClaimCommand deleteUserOperationClaimCommand)
+    {
+        GetByIdUserOperationClaimDto result = await Mediator.Send(deleteUserOperationClaimCommand);
         return Ok(result);
     }
 }

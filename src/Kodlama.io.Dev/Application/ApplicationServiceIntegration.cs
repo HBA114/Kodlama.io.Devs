@@ -10,6 +10,7 @@ using System.Reflection;
 using Application.Features.Auths.Rules;
 using Application.Services.AuthService;
 using Application.Features.UserOperationClaims.Rules;
+using Application.Features.OperationClaims.Rules;
 
 namespace Application;
 
@@ -25,6 +26,7 @@ public static class ApplicationServiceIntegration
         services.AddScoped<GithubLinkBusinessRules>();
         services.AddScoped<AuthBusinessRules>();
         services.AddScoped<UserOperationClaimBusinessRules>();
+        services.AddScoped<OperationClaimBusinessRules>();
 
         services.AddScoped<IAuthService, AuthManager>();
 

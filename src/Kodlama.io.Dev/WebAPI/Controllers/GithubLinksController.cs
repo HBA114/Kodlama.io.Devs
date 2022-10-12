@@ -28,6 +28,13 @@ public class GithubLinksController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("{Id}")]
+    public async Task<IActionResult> GetById([FromRoute] GetByIdGithubLinkQuery getByIdGithubLinkQuery)
+    {
+        GithubLinkGetbyIdDto result = await Mediator.Send(getByIdGithubLinkQuery);
+        return Ok(result);
+    }
+
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateGithubLinkCommand updateGithubLinkCommand)
     {
@@ -35,17 +42,10 @@ public class GithubLinksController : BaseController
         return Ok(result);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Delete([FromBody] DeleteGithubLinkCommand deleteGithubLinkCommand)
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> Delete([FromRoute] DeleteGithubLinkCommand deleteGithubLinkCommand)
     {
         GithubLinkGetbyIdDto result = await Mediator.Send(deleteGithubLinkCommand);
-        return Ok(result);
-    }
-
-    [HttpGet("{Id}")]
-    public async Task<IActionResult> GetById([FromRoute] GetByIdGithubLinkQuery getByIdGithubLinkQuery)
-    {
-        GithubLinkGetbyIdDto result = await Mediator.Send(getByIdGithubLinkQuery);
         return Ok(result);
     }
 }

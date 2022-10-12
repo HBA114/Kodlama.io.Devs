@@ -1,4 +1,4 @@
-using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaimCommand;
+using Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
 using Application.Features.UserOperationClaims.Dtos;
 using Application.Features.UserOperationClaims.Models;
 using AutoMapper;

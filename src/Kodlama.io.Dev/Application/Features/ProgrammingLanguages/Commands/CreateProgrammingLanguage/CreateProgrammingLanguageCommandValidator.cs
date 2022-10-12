@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage
+namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
+
+public class CreateProgrammingLanguageCommandValidator : AbstractValidator<CreateProgrammingLanguageCommand>
 {
-    public class CreateProgrammingLanguageCommandValidator : AbstractValidator<CreateProgrammingLanguageCommand>
+    public CreateProgrammingLanguageCommandValidator()
     {
-        public CreateProgrammingLanguageCommandValidator()
-        {
-            RuleFor(p => p.Name).NotEmpty();
-        }
+        RuleFor(p => p.Name).NotEmpty();
     }
 }

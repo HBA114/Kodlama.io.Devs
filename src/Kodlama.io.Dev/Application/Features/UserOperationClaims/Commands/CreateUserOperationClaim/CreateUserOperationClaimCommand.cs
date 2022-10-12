@@ -6,7 +6,7 @@ using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using MediatR;
 
-namespace Application.Features.UserOperationClaims.Commands.CreateUserOperationClaimCommand;
+namespace Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
 public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClaimDto>, ISecuredRequest
 {
     public int UserId { get; set; }
@@ -29,11 +29,12 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
 
         public async Task<CreatedUserOperationClaimDto> Handle(CreateUserOperationClaimCommand request, CancellationToken cancellationToken)
         {
+            // Add Business Rule For Block Adding Same OperationClaimId To Same User
             UserOperationClaim userOperationClaim = _mapper.Map<UserOperationClaim>(request);
             UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(userOperationClaim);
-            CreatedUserOperationClaimDto createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);
+            CreatedUserOperationClaimDto mappedCreatedUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);
 
-            return createdUserOperationClaimDto;
+            return mappedCreatedUserOperationClaimDto;
         }
     }
 }

@@ -6,31 +6,29 @@ using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Features.ProgrammingLanguages.Queries
+namespace Application.Features.ProgrammingLanguages.Queries;
+public class GetListProgrammingLanguageQuery : IRequest<ProgrammingLanguageListModel>
 {
-    public class GetListProgrammingLanguageQuery : IRequest<ProgrammingLanguageListModel>
+    public PageRequest PageRequest { get; set; }
+
+    public class GetListProgrammingLanguageQueryHandler : IRequestHandler<GetListProgrammingLanguageQuery, ProgrammingLanguageListModel>
     {
-        public PageRequest PageRequest { get; set; }
+        private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
+        private readonly IMapper _mapper;
 
-        public class GetListProgrammingLanguageQueryHandler : IRequestHandler<GetListProgrammingLanguageQuery, ProgrammingLanguageListModel>
+        public GetListProgrammingLanguageQueryHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper)
         {
-            private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
-            private readonly IMapper _mapper;
+            _programmingLanguageRepository = programmingLanguageRepository;
+            _mapper = mapper;
+        }
 
-            public GetListProgrammingLanguageQueryHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper)
-            {
-                _programmingLanguageRepository = programmingLanguageRepository;
-                _mapper = mapper;
-            }
+        public async Task<ProgrammingLanguageListModel> Handle(GetListProgrammingLanguageQuery request, CancellationToken cancellationToken)
+        {
+            IPaginate<ProgrammingLanguage> programmingLanguages = await _programmingLanguageRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
 
-            public async Task<ProgrammingLanguageListModel> Handle(GetListProgrammingLanguageQuery request, CancellationToken cancellationToken)
-            {
-                IPaginate<ProgrammingLanguage> programmingLanguages = await _programmingLanguageRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+            ProgrammingLanguageListModel mappedProgrammingLanguageListModel = _mapper.Map<ProgrammingLanguageListModel>(programmingLanguages);
 
-                ProgrammingLanguageListModel mappedProgrammingLanguageListModel = _mapper.Map<ProgrammingLanguageListModel>(programmingLanguages);
-
-                return mappedProgrammingLanguageListModel;
-            }
+            return mappedProgrammingLanguageListModel;
         }
     }
 }
